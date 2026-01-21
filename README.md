@@ -1,6 +1,9 @@
 # Hytale Downloader
 
-A native command-line tool for downloading Hytale game files with OAuth2 authentication.
+[![Release](https://img.shields.io/github/v/release/AselionHYT/hytale-downloader)](https://github.com/AselionHYT/hytale-downloader/releases)
+[![License](https://img.shields.io/github/license/AselionHYT/hytale-downloader)](LICENSE)
+
+A native command-line tool for downloading Hytale game files on macOS and Linux. The official Hytale downloader only supports Windows, so this tool fills the gap for Mac and Linux users.
 
 ## Features
 
@@ -15,7 +18,13 @@ A native command-line tool for downloading Hytale game files with OAuth2 authent
 
 ## Installation
 
-### Homebrew (macOS)
+### Homebrew (macOS / Linux)
+
+```bash
+brew install AselionHYT/tap/hytale-downloader
+```
+
+Or with tap:
 
 ```bash
 brew tap AselionHYT/tap
@@ -95,6 +104,7 @@ hytale-downloader -debug
 | `-debug` | Enable debug logging | false |
 | `-headless` | Run without interactive prompts (CI/CD) | false |
 | `-credentials` | Path to custom credentials file | Default location |
+| `-logout` | Delete stored credentials and exit | false |
 
 ## CI/CD / Headless Mode
 
@@ -172,7 +182,13 @@ Credentials are automatically refreshed on subsequent runs.
 
 ### Logout
 
-To logout, simply delete the credentials file:
+To delete stored credentials:
+
+```bash
+hytale-downloader -logout
+```
+
+Or manually:
 
 ```bash
 rm ~/.hytale-downloader/credentials.json
