@@ -31,7 +31,14 @@ func main() {
 	workersFlag := flag.Int("workers", 4, "Number of parallel download workers")
 	credentialsFlag := flag.String("credentials", "", "Path to credentials file (for CI/CD)")
 	headlessFlag := flag.Bool("headless", false, "Run in headless mode (no interactive prompts, for CI/CD)")
+	logoutFlag := flag.Bool("logout", false, "Delete stored credentials and exit")
 	flag.Parse()
+
+	// Handle logout flag
+	if *logoutFlag {
+		handleLogout()
+		return
+	}
 
 	// Setup logger
 	setupLogger(*debugFlag)
@@ -310,4 +317,20 @@ func printSuccess(downloadPath string) {
 	))
 	fmt.Println(successBox)
 	fmt.Println()
+}
+
+func handleLogout() {
+	paths, err := config.GetPaths()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%s Error: %v\n", ui.SymbolError, err)
+		os.Exit(1)
+	}
+
+	err = auth.DeleteCredentials(paths)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%s Error deleting credentials: %v\n", ui.SymbolError, err)
+		os.Exit(1)
+	}
+
+	fmt.Printf("%s Credentials deleted from %s\n", ui.SymbolSuccess, paths.CredentialsFile)
 }
