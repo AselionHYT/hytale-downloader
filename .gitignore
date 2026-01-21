@@ -1,0 +1,76 @@
+# Binaries
+build/
+dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+# Binary in root (but not cmd/hytale-downloader directory)
+/hytale-downloader
+/hytale-downloader-*
+
+# Test binary
+*.test
+
+# Output of go coverage
+*.out
+coverage.html
+
+# Dependency directories
+vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# Credentials (NEVER commit these!)
+credentials.json
+*.credentials.json
+.hytale-downloader-credentials.json
+
+# Local config
+.env
+.env.local
+
+# Downloaded files
+*.zip
+out/
+
+# GoReleaser
+dist/
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+
+# Debug files
+debug.log
+*.log
+
+# mitmproxy flows
+*.mitm
+flows.mitm
+captures/
+
+# Old auth files (root level only, not internal/auth)
+/auth/
+
+# Docker/Server files (not needed for downloader)
+Dockerfile
+docker-compose.yml
+download-server.sh
+entrypoint.sh
+QUICKSTART.md

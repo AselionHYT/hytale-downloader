@@ -1,0 +1,79 @@
+# GoReleaser configuration for Hytale Downloader
+# https://goreleaser.com
+
+version: 2
+
+project_name: hytale-downloader
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: hytale-downloader
+    main: ./cmd/hytale-downloader
+    binary: hytale-downloader
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - arm64
+      - amd64
+    ignore:
+      # Only build darwin/arm64 and linux/amd64
+      - goos: darwin
+        goarch: amd64
+      - goos: linux
+        goarch: arm64
+    ldflags:
+      - -s -w
+      - -X 'github.com/AselionHYT/hytale-downloader/pkg/version.Version={{.Version}}'
+      - -X 'github.com/AselionHYT/hytale-downloader/pkg/version.Commit={{.ShortCommit}}'
+      - -X 'github.com/AselionHYT/hytale-downloader/pkg/version.BuildDate={{.Date}}'
+
+archives:
+  - id: default
+    format: tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - README.md
+      - LICENSE
+
+checksum:
+  name_template: 'checksums.txt'
+  algorithm: sha256
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'
+      - Merge pull request
+      - Merge branch
+
+release:
+  github:
+    owner: AselionHYT
+    name: hytale-downloader
+  draft: false
+  prerelease: auto
+  name_template: "v{{.Version}}"
+
+brews:
+  - name: hytale-downloader
+    repository:
+      owner: AselionHYT
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    directory: Formula
+    homepage: https://github.com/AselionHYT/hytale-downloader
+    description: Native macOS ARM64 downloader for Hytale game files
+    license: MIT
+    install: |
+      bin.install "hytale-downloader"
+    test: |
+      system "#{bin}/hytale-downloader", "-version"
