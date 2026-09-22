@@ -1,5 +1,3 @@
-> **Archived:** replaced by the Heimdall downloader token chain and the game-servers `build-base` workflow, which fetch Hytale server builds in CI. No Aselion CI or deployment uses this tool anymore (2026-09-22).
-
 # Hytale Downloader
 
 [![Release](https://img.shields.io/github/v/release/AselionHYT/hytale-downloader)](https://github.com/AselionHYT/hytale-downloader/releases)
